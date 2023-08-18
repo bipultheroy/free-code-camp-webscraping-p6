@@ -11,7 +11,10 @@ BOT_NAME = 'bookscraper'
 
 SPIDER_MODULES = ['bookscraper.spiders']
 NEWSPIDER_MODULE = 'bookscraper.spiders'
-
+SCRAPEOPS_API_KEY = 'eb5fba24-2d48-4ac0-9df3-b6ea04894213'
+SCRAPEOPS_SETTINGS_EXCLUSION_LIST = [
+    'API_KEY'
+]
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'bookscraper (+http://www.yourdomain.com)'
@@ -50,15 +53,19 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
+DOWNLOADER_MIDDLEWARES = {
 #    'bookscraper.middlewares.BookscraperDownloaderMiddleware': 543,
-#}
+   'scrapeops_scrapy.middleware.retry.RetryMiddleware': 550,
+   'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
+EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
+    'scrapeops_scrapy.extension.ScrapeOpsMonitor': 500, 
+}
+
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
